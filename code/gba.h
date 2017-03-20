@@ -7,13 +7,23 @@ typedef unsigned int    uint32;
 
 typedef uint16 COLOR;
 
-#define REG_VCOUNT_ADDR  0x4000006
-#define REG_VCOUNT (* (volatile uint16*) REG_VCOUNT_ADDR)
+#define REG_VCOUNT_ADDR 0x04000006
+#define REG_VCOUNT      (* (volatile uint16*) REG_VCOUNT_ADDR)
 
-#define MEM_IO      0x04000000
-#define MEM_VRAM    0x06000000
-
+#define MEM_IO          0x04000000
 #define REG_DISPCNT     *((volatile uint32*)(MEM_IO))
+
+#define REG_IME_ADDR    0x04000208
+#define REG_IME         *((volatile uint16*) REG_IME_ADDR)
+
+#define REG_IE_ADDR     0x04000200
+#define REG_IE          *((volatile uint16*) REG_IE_ADDR)
+
+#define MEM_VRAM        0x06000000
+#define vid_mem         ((uint16*)MEM_VRAM)
+
+#define REG_DISPSTAT_ADDR 0x04000004
+#define REG_DISPSTAT    *((volatile uint16*) REG_DISPSTAT_ADDR)
 
 #define DCNT_MODE0      0x0000
 #define DCNT_MODE1      0x0001
@@ -30,8 +40,6 @@ typedef uint16 COLOR;
 
 #define SCREEN_WIDTH   240
 #define SCREEN_HEIGHT  160
-
-#define vid_mem     ((uint16*)MEM_VRAM)
 
 #define COL_BLACK   0x0000
 #define COL_RED     0x001F

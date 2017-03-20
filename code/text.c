@@ -34,13 +34,13 @@ const unsigned int fontTiles[192]=
 void write(char* msg, COLOR textCol, int x, int y)
 {
     int c = *msg++;
-    uint16* dst = &vid_mem[y * 240 + x];
+    uint16* dst = &vid_mem[y * SCREEN_WIDTH + x];
 
     while (c != '\0')
     {
         if(c == '\n')       // line break
         {
-            dst += 240*8;
+            dst += SCREEN_WIDTH*8;
             x=0;
         }
         else                // normal character
@@ -59,7 +59,7 @@ void write(char* msg, COLOR textCol, int x, int y)
                 {
                     if(row & 1)
                     {
-                        dst[(y +iy) * 240 + (x + ix)] = textCol;
+                        dst[(y +iy) * SCREEN_WIDTH + (x + ix)] = textCol;
                     }
                 }
             }

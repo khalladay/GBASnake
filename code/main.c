@@ -8,6 +8,8 @@
 #include "input.h"
 #include "snake.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 int x = 0;
 void update()
@@ -25,6 +27,7 @@ void vsync()
 }
 
 Snake snake;
+SnakeNode targetNode;
 
 void processInput()
 {
@@ -52,11 +55,26 @@ void processInput()
 
 }
 
+void SpawnTargetNode()
+{
+	targetNode.x = rand() % 21;
+	targetNode.y = rand() % 11;
+	DrawLooseNode(&snake, &targetNode);
+}
+
+//bios call to set low power mode until next vblank
+void WaitUntilVBlank()
+{
+	asm("swi 0x05");
+}
 
 int main()
 {
-    REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
+    REG_DISPCNT = DCNT_MODE3 | DCNT_BG2; //mode 3 graphics, we aren't actually using bg2 right now
+	REG_IME = 1;					//enable interrupts
+	//REG_IE |= IRQ_VBLANK;          // send interrupts at vblank
 
+	srand(time(0));
 //draw game frame
 	int frameWidth = 2;
 	int padding = 8;
@@ -70,8 +88,8 @@ int main()
 	drawRect2(SCREEN_WIDTH - (padding+frameWidth), padding, frameWidth, SCREEN_HEIGHT - padding * 2, frameCol);
 	drawRect2(padding, SCREEN_HEIGHT - padding, SCREEN_WIDTH - padding * 2, frameWidth, frameCol);
 
-	InitSnake(&snake, cellSize, gridStart, gridStart, 3, 2);
-
+	InitSnake(&snake, cellSize, gridStart, gridStart, 3, 2, 22*14);
+	SpawnTargetNode();
     while(1)
 	{
 		vsync();
@@ -85,17 +103,25 @@ int main()
 		vsync();
 		processInput();
 
-		if (snake.head.x > 20 ||
-			snake.head.x < 1 ||
+		if ( snake.head.x > 20 ||
+			snake.head.x < 0 ||
 			snake.head.y > 12 ||
-			snake.head.y < 1 )
+			snake.head.y < 0 )
 			{
-
+				write("Game Over", COL_RED, 25, 25);
 			}
-			else
+		else
 		{
 			UpdateSnake(&snake);
 			DrawSnake(&snake);
+
+		}
+
+		if (IsCollidingWithNode(&snake, &targetNode))
+		{
+			AddNode(&snake);
+
+			SpawnTargetNode();
 		}
 
 
