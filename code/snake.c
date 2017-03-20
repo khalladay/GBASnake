@@ -114,6 +114,15 @@ void DrawLooseNode(SnakeNode* n, int gridOffset, int nodeSize)
 
 }
 
+void ClearLooseNode(SnakeNode* n, int gridOffset, int nodeSize)
+{
+    drawRect2(gridOffset + n->x * nodeSize,
+              gridOffset + n->y * nodeSize,
+              nodeSize, nodeSize, COL_BLACK);
+
+}
+
+
 int IsCollidingWithNode(Snake* s, SnakeNode* node)
 {
     return s->head.x == node->x && s->head.y == node->y;

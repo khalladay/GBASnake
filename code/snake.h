@@ -38,6 +38,8 @@ void InitSnake(Snake* snake, uint8* owningGrid, int startX, int startY, int maxL
 void DrawSnake(Snake* s, int gridOffset, int nodeSize);
 void ClearTail(Snake* s, int gridOffset, int nodeSize);
 void DrawLooseNode(SnakeNode* node, int gridOffset, int nodeSize);
+void ClearLooseNode(SnakeNode* node, int gridOffset, int nodeSize);
+
 int IsCollidingWithNode(Snake* s, SnakeNode* node);
 int IsCollidingWithSnake(Snake* s, int x, int y);
 int UpdateSnake(Snake* s);
