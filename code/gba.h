@@ -55,5 +55,14 @@ inline COLOR RGB15(uint32 red, uint32 green, uint32 blue)
     return red | (green<<5) | (blue<<10);
 }
 
+inline void vsync()
+{
+  while (REG_VCOUNT >= 160);
+  while (REG_VCOUNT < 160);
+}
+
+
+
+
 
 #endif

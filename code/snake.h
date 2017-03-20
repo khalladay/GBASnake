@@ -25,22 +25,22 @@ typedef struct
 	SnakeNode head;
 	SnakeNode* tail;
 	SnakeNode* freeNodes;
+	uint8* owningGrid;
 	int length;
-	int nodeSize;
-	int offsetX;
-	int offsetY;
 	int xVel;
 	int yVel;
 	int lastXMov;
 	int lastYMov;
 }Snake;
 
-void InitSnake(Snake* snake, int nodeSize, int gridStartX, int gridStartY, int startX, int startY, int maxLen);
-void DrawSnake(Snake* s);
-void DrawLooseNode(Snake* s, SnakeNode* node);
+void InitSnake(Snake* snake, uint8* owningGrid, int startX, int startY, int maxLen);
+
+void DrawSnake(Snake* s, int gridOffset, int nodeSize);
+void ClearTail(Snake* s, int gridOffset, int nodeSize);
+void DrawLooseNode(SnakeNode* node, int gridOffset, int nodeSize);
 int IsCollidingWithNode(Snake* s, SnakeNode* node);
-int IsCollidingWithSelf(Snake* s);
-void UpdateSnake(Snake* s);
+int IsCollidingWithSnake(Snake* s, int x, int y);
+int UpdateSnake(Snake* s);
 void UpdateVelocityX(Snake* s, int vel);
 void UpdateVelocityY(Snake* s, int vel);
 void AddNode(Snake* s);

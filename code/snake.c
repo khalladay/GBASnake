@@ -5,37 +5,40 @@
 
 
 
-void InitSnake(Snake* snake, int nodeSize, int gridStartX, int gridStartY, int startX, int startY, int maxLen)
+void InitSnake(Snake* snake, uint8* grid, int startX, int startY, int maxLen)
 {
     snake->head.x = startX;
     snake->head.y = startY;
-    snake->nodeSize = nodeSize;
     snake->length = 1;
     snake->xVel = SNAKE_RIGHT;
     snake->yVel = SNAKE_STOPPED;
-    snake->offsetX = gridStartX;
-    snake->offsetY = gridStartY;
     snake->tail = &snake->head;
     snake->lastXMov = SNAKE_RIGHT;
     snake->lastYMov = SNAKE_STOPPED;
     snake->freeNodes = (SnakeNode*)malloc(sizeof(SnakeNode) * maxLen);
+    snake->owningGrid = grid;
 }
 
-void DrawSnake(Snake* s)
-{
-    //draw the head, since it's new
-    drawRect2(s->offsetX + s->head.x * s->nodeSize,
-              s->offsetY + s->head.y * s->nodeSize,
-              s->nodeSize, s->nodeSize, COL_WHITE);
-}
-
-void UpdateSnake(Snake* s)
+void ClearTail(Snake* s, int gridOffset, int nodeSize)
 {
     //clear tail cell since we're moving the tail
-    drawRect2(s->offsetX + s->tail->x * s->nodeSize,
-              s->offsetY + s->tail->y * s->nodeSize,
-              s->nodeSize, s->nodeSize, COL_BLACK);
+    drawRect2(gridOffset + s->tail->x * nodeSize,
+              gridOffset + s->tail->y * nodeSize,
+              nodeSize, nodeSize, COL_BLACK);
+    s->owningGrid[s->tail->y * 14 + s->tail->x] = 0;
 
+}
+
+void DrawSnake(Snake* s, int gridOffset,int nodeSize)
+{
+    //draw the head, since it's new
+    drawRect2(gridOffset + s->head.x * nodeSize,
+              gridOffset + s->head.y * nodeSize,
+              nodeSize, nodeSize, COL_WHITE);
+}
+
+int UpdateSnake(Snake* s)
+{
     SnakeNode* curNode = s->tail;
 
     while(curNode != NULL)
@@ -49,30 +52,44 @@ void UpdateSnake(Snake* s)
         }
         else
         {
-            curNode->x += (s->xVel - 1);
-            curNode->y += (s->yVel - 1);
+            int newX = curNode->x + (s->xVel - 1);
+            int newY = curNode->y + (s->yVel - 1);
+
+            //are we about to collide with ourselves?
+            if (IsCollidingWithSnake(s, newX, newY))
+            {
+                return 0;
+            }
+
+            curNode->x = newX;
+            curNode->y = newY;
+
             s->lastXMov =  (s->xVel);
             s->lastYMov = (s->yVel);
+            s->owningGrid[curNode->y * 14 + curNode->x] = 1;
+
             break;
         }
 
     }
+    return 1;
 }
 
-int IsCollidingWithSelf(Snake* s)
+int IsCollidingWithSnake(Snake* s, int x, int y)
 {
-    int headX = s->head.x;
-    int headY = s->head.y;
-
     SnakeNode* curNode = s->tail;
-
-    while(curNode != &s->head)
+    while(curNode != NULL)
     {
-        if (curNode->x == headX && curNode->y == headY)
+        SnakeNode* prev = curNode->prev;
+        if(prev != NULL)
         {
-            return 1;
+            if (curNode->x == x && curNode->y == y)
+            {
+                return 1;
+            }
         }
         curNode = curNode->prev;
+
     }
 
     return 0;
@@ -81,7 +98,6 @@ int IsCollidingWithSelf(Snake* s)
 
 void AddNode(Snake* s)
 {
-    SnakeNode* oldTail = s->tail;
     SnakeNode* newTail = &s->freeNodes[s->length-1];
     newTail->x = s->tail->x;
     newTail->y = s->tail->y;
@@ -90,11 +106,11 @@ void AddNode(Snake* s)
     s->length++;
 }
 
-void DrawLooseNode(Snake* s, SnakeNode* n)
+void DrawLooseNode(SnakeNode* n, int gridOffset, int nodeSize)
 {
-    drawRect2(s->offsetX + n->x * s->nodeSize,
-              s->offsetY + n->y * s->nodeSize,
-              s->nodeSize, s->nodeSize, COL_WHITE);
+    drawRect2(gridOffset + n->x * nodeSize,
+              gridOffset + n->y * nodeSize,
+              nodeSize, nodeSize, COL_WHITE);
 
 }
 
