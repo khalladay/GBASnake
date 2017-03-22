@@ -95,17 +95,6 @@ int main()
 				default: break;
 			}
 		}
-
-
-		// if (gameOver)
-		// {
-		// 	if ( key_is_down(KEY_START))
-		// 	{
-		// 		restart();
-		// 		gameOver = 0;
-		// 	}
-		// }
-
 	}
 
     return 0;
