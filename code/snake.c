@@ -2,39 +2,23 @@
 #include "drawing.h"
 #include <stdlib.h>
 #include "text.h"
+#include <string.h>
 
 
-
-void InitSnake(Snake* snake, uint8* grid, int startX, int startY, int maxLen)
+void InitSnake(Snake* snake, int startX, int startY, int maxLen)
 {
     snake->head.x = startX;
     snake->head.y = startY;
     snake->length = 1;
     snake->xVel = SNAKE_RIGHT;
     snake->yVel = SNAKE_STOPPED;
-    snake->tail = &snake->head;
     snake->lastXMov = SNAKE_RIGHT;
     snake->lastYMov = SNAKE_STOPPED;
-    snake->freeNodes = (SnakeNode*)malloc(sizeof(SnakeNode) * maxLen);
-    snake->owningGrid = grid;
-}
 
-void ClearTail(Snake* s, int gridOffset, int nodeSize)
-{
-    //clear tail cell since we're moving the tail
-    drawRect2(gridOffset + s->tail->x * nodeSize,
-              gridOffset + s->tail->y * nodeSize,
-              nodeSize, nodeSize, COL_BLACK);
-    s->owningGrid[s->tail->y * 14 + s->tail->x] = 0;
+    snake->tail = &snake->head;
+    snake->tail->prev = NULL;
 
-}
-
-void DrawSnake(Snake* s, int gridOffset,int nodeSize)
-{
-    //draw the head, since it's new
-    drawRect2(gridOffset + s->head.x * nodeSize,
-              gridOffset + s->head.y * nodeSize,
-              nodeSize, nodeSize, COL_WHITE);
+    memset(&snake->freeNodes[0], 0, sizeof(SnakeNode) * NUM_CELLS_X * NUM_CELLS_Y);
 }
 
 int UpdateSnake(Snake* s)
@@ -56,7 +40,7 @@ int UpdateSnake(Snake* s)
             int newY = curNode->y + (s->yVel - 1);
 
             //are we about to collide with ourselves?
-            if (IsCollidingWithSnake(s, newX, newY))
+            if (getCellValue(newX, newY))
             {
                 return 0;
             }
@@ -66,34 +50,13 @@ int UpdateSnake(Snake* s)
 
             s->lastXMov =  (s->xVel);
             s->lastYMov = (s->yVel);
-            s->owningGrid[curNode->y * 14 + curNode->x] = 1;
+            setCellValue(newX,newY,1);
 
             break;
         }
 
     }
     return 1;
-}
-
-int IsCollidingWithSnake(Snake* s, int x, int y)
-{
-    SnakeNode* curNode = s->tail;
-    while(curNode != NULL)
-    {
-        SnakeNode* prev = curNode->prev;
-        if(prev != NULL)
-        {
-            if (curNode->x == x && curNode->y == y)
-            {
-                return 1;
-            }
-        }
-        curNode = curNode->prev;
-
-    }
-
-    return 0;
-
 }
 
 void AddNode(Snake* s)
@@ -110,7 +73,7 @@ void DrawLooseNode(SnakeNode* n, int gridOffset, int nodeSize)
 {
     drawRect2(gridOffset + n->x * nodeSize,
               gridOffset + n->y * nodeSize,
-              nodeSize, nodeSize, COL_WHITE);
+              nodeSize, nodeSize, COL_YELLOW);
 
 }
 

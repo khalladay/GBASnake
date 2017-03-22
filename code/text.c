@@ -31,7 +31,7 @@ const unsigned int fontTiles[192]=
     0x18181818, 0x00181818, 0x3018180C, 0x000C1818, 0x003B6E00, 0x00000000, 0x00000000, 0x00000000,
 };
 
-void write(char* msg, COLOR textCol, int x, int y)
+void drawString(char* msg, COLOR textCol, int x, int y)
 {
     int c = *msg++;
     uint16* dst = &vid_mem[y * SCREEN_WIDTH + x];

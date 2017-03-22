@@ -1,5 +1,5 @@
 #ifndef GBA_H
-#define GBA_H
+#define GBA_H 1
 
 typedef unsigned char   uint8;
 typedef unsigned short  uint16;
