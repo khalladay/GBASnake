@@ -13,6 +13,8 @@ void SetMatchResult(int didPlayerWin)
 
 void beginGameOverScreen()
 {
+    state = END_PLAYING;
+
     if (result)
     {
         drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, COL_BLACK);

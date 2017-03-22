@@ -12,6 +12,7 @@ int getTitleScreenState()
 
 void beginTitleScreeen()
 {
+    state = TITLE_PLAYING;
     drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, COL_LIME);
     drawString("GBA SNAKE", COL_BLACK, 40,40);
 }

@@ -99,7 +99,7 @@ void restartGame()
 {
     gameState = STATE_PLAYING;
     srand(time(NULL));
-    memset(&grid[0], 0, sizeof(uint32) * NUM_CELLS_Y * NUM_CELLS_X);
+    memset(&grid[0], 0, sizeof(uint8) * NUM_CELLS_Y * NUM_CELLS_X);
 
     int snakeStartX = NUM_CELLS_X/2 - 1;
 	int snakeStartY = NUM_CELLS_Y/2 - 1;
