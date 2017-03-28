@@ -17,12 +17,6 @@
 uint8 AppState = STATE_JUST_LAUNCHED;
 uint8 TargetState = STATE_TITLE;
 
-//bios call to set low power mode until next vblank
-void WaitUntilVBlank()
-{
-	asm("swi 0x05");
-}
-
 int main()
 {
     REG_DISPCNT = DCNT_MODE3 | DCNT_BG2; //mode 3 graphics, we aren't actually using bg2 right now
@@ -30,7 +24,7 @@ int main()
 
     while(1)
 	{
-		//this is awful, fix it later
+		//this is awful, but it works for snake
 		for (int i = 0; i < 4; ++i)
 		{
 			vsync();

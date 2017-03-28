@@ -19,14 +19,14 @@ void beginGameOverScreen()
     {
         drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, COL_BLACK);
         drawString("A WINNER IS YOU", COL_LIME, 25, 25);
-        drawString("Press Start To Rety: ", COL_LIME, 15, 35);
+        drawString("Press Start To Retry ", COL_LIME, 13, 35);
 
     }
     else
     {
         drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, COL_RED);
         drawString("You Lost", COL_BLACK, 25, 25);
-        drawString("Press Start To Rety: ", COL_BLACK, 15, 35);
+        drawString("Press Start To Retry ", COL_BLACK, 13, 35);
 
     }
 }

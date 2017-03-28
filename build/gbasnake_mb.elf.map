@@ -58,7 +58,7 @@ Discarded input sections
  .comment       0x00000000       0x23 input.o
  .ARM.attributes
                 0x00000000       0x2c input.o
- .text          0x00000000        0x4 main.o
+ .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 snake.o
  .bss           0x00000000        0x0 snake.o
  .data          0x00000000        0x0 text.o
@@ -645,7 +645,7 @@ Linker script and memory map
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0xe8
+.debug_aranges  0x00000000       0xe0
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 drawing.o
@@ -654,58 +654,58 @@ Linker script and memory map
  .debug_aranges
                 0x00000040       0x20 gameOver.o
  .debug_aranges
-                0x00000060       0x28 main.o
+                0x00000060       0x20 main.o
  .debug_aranges
-                0x00000088       0x20 snake.o
+                0x00000080       0x20 snake.o
  .debug_aranges
-                0x000000a8       0x20 text.o
+                0x000000a0       0x20 text.o
  .debug_aranges
-                0x000000c8       0x20 title.o
+                0x000000c0       0x20 title.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x28b3
+.debug_info     0x00000000     0x28a2
  *(.debug_info)
  .debug_info    0x00000000      0x1fd drawing.o
  .debug_info    0x000001fd     0x1263 game.o
  .debug_info    0x00001460      0x252 gameOver.o
- .debug_info    0x000016b2      0x242 main.o
- .debug_info    0x000018f4      0xcb3 snake.o
- .debug_info    0x000025a7      0x163 text.o
- .debug_info    0x0000270a      0x1a9 title.o
+ .debug_info    0x000016b2      0x231 main.o
+ .debug_info    0x000018e3      0xcb3 snake.o
+ .debug_info    0x00002596      0x163 text.o
+ .debug_info    0x000026f9      0x1a9 title.o
 
-.debug_abbrev   0x00000000      0xafc
+.debug_abbrev   0x00000000      0xae6
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0xde drawing.o
  .debug_abbrev  0x000000de      0x3a1 game.o
  .debug_abbrev  0x0000047f      0x134 gameOver.o
- .debug_abbrev  0x000005b3       0xe2 main.o
- .debug_abbrev  0x00000695      0x26d snake.o
- .debug_abbrev  0x00000902       0xd2 text.o
- .debug_abbrev  0x000009d4      0x128 title.o
+ .debug_abbrev  0x000005b3       0xcc main.o
+ .debug_abbrev  0x0000067f      0x26d snake.o
+ .debug_abbrev  0x000008ec       0xd2 text.o
+ .debug_abbrev  0x000009be      0x128 title.o
 
-.debug_line     0x00000000      0x887
+.debug_line     0x00000000      0x874
  *(.debug_line)
  .debug_line    0x00000000       0xdf drawing.o
  .debug_line    0x000000df      0x2d8 game.o
  .debug_line    0x000003b7       0xaa gameOver.o
- .debug_line    0x00000461       0xeb main.o
- .debug_line    0x0000054c      0x213 snake.o
- .debug_line    0x0000075f       0x8e text.o
- .debug_line    0x000007ed       0x9a title.o
+ .debug_line    0x00000461       0xd8 main.o
+ .debug_line    0x00000539      0x213 snake.o
+ .debug_line    0x0000074c       0x8e text.o
+ .debug_line    0x000007da       0x9a title.o
 
-.debug_frame    0x00000000      0x390
+.debug_frame    0x00000000      0x380
  *(.debug_frame)
  .debug_frame   0x00000000       0x68 drawing.o
  .debug_frame   0x00000068      0x10c game.o
  .debug_frame   0x00000174       0x58 gameOver.o
- .debug_frame   0x000001cc       0x48 main.o
- .debug_frame   0x00000214       0xdc snake.o
- .debug_frame   0x000002f0       0x38 text.o
- .debug_frame   0x00000328       0x68 title.o
+ .debug_frame   0x000001cc       0x38 main.o
+ .debug_frame   0x00000204       0xdc snake.o
+ .debug_frame   0x000002e0       0x38 text.o
+ .debug_frame   0x00000318       0x68 title.o
 
-.debug_str      0x00000000      0x9c4
+.debug_str      0x00000000      0x9b4
  *(.debug_str)
  .debug_str     0x00000000      0x107 drawing.o
                                 0x114 (size before relaxing)
@@ -713,13 +713,13 @@ Linker script and memory map
                                 0x79b (size before relaxing)
  .debug_str     0x00000776       0x88 gameOver.o
                                 0x184 (size before relaxing)
- .debug_str     0x000007fe       0xb2 main.o
-                                0x1f6 (size before relaxing)
- .debug_str     0x000008b0       0x9e snake.o
+ .debug_str     0x000007fe       0xa2 main.o
+                                0x1e6 (size before relaxing)
+ .debug_str     0x000008a0       0x9e snake.o
                                 0x6b3 (size before relaxing)
- .debug_str     0x0000094e       0x41 text.o
+ .debug_str     0x0000093e       0x41 text.o
                                 0x111 (size before relaxing)
- .debug_str     0x0000098f       0x35 title.o
+ .debug_str     0x0000097f       0x35 title.o
                                 0x182 (size before relaxing)
 
 .debug_loc      0x00000000      0xe74
@@ -770,11 +770,11 @@ LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/6.3.0/thumb/crtend.o
 LOAD c:/devkitpro/devkitarm/bin/../lib/gcc/arm-none-eabi/6.3.0/thumb/crtn.o
 OUTPUT(w:/GBA/2_Snake/gbasnake/gbasnake_mb.elf elf32-littlearm)
 
-.debug_ranges   0x00000000      0x348
+.debug_ranges   0x00000000      0x340
  .debug_ranges  0x00000000      0x100 drawing.o
  .debug_ranges  0x00000100      0x100 game.o
  .debug_ranges  0x00000200       0x18 gameOver.o
- .debug_ranges  0x00000218       0x80 main.o
- .debug_ranges  0x00000298       0x40 snake.o
- .debug_ranges  0x000002d8       0x58 text.o
- .debug_ranges  0x00000330       0x18 title.o
+ .debug_ranges  0x00000218       0x78 main.o
+ .debug_ranges  0x00000290       0x40 snake.o
+ .debug_ranges  0x000002d0       0x58 text.o
+ .debug_ranges  0x00000328       0x18 title.o
